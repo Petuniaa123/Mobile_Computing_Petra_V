@@ -1,8 +1,10 @@
 package com.example.hw3
 
 import SampleData
+import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.compose.setContent
@@ -41,6 +43,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -141,10 +144,18 @@ fun Profile(navigateBack: () -> Unit, viewModel: UserViewModel, user: User?) {
 
     var imageUri by remember { mutableStateOf(user?.image?: "") }
 
+    val context = LocalContext.current
     val launcher = rememberLauncherForActivityResult(ActivityResultContracts.OpenDocument()) { uri: Uri? ->
         uri?.let {
-
-            imageUri = uri.toString()
+            try {
+                val takeFlags: Int = Intent.FLAG_GRANT_READ_URI_PERMISSION or
+                        Intent.FLAG_GRANT_WRITE_URI_PERMISSION
+                val contentResolver = context.contentResolver
+                contentResolver.takePersistableUriPermission(uri, takeFlags)
+                imageUri = uri.toString()
+            } catch (e: Exception) {
+                Log.e("main activity", "error granting permissions to uri: $uri", e)
+            }
 
         }
     }

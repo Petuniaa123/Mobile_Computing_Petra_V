@@ -55,8 +55,8 @@ android {
 dependencies {
 
     //navigation
-    val nav_version = "2.7.6"
-    val material = "1.6.0"
+    val nav_version = "2.7.7"
+    val material = "1.6.1"
 
     implementation("androidx.navigation:navigation-compose:$nav_version")
     implementation("androidx.compose.material:material-icons-core:$material")
@@ -100,7 +100,7 @@ dependencies {
     api("androidx.activity:activity-ktx:1.8.2")
     api("androidx.fragment:fragment-ktx:1.6.2")
 
-    implementation("androidx.compose.runtime:runtime-livedata:1.6.0")
+    implementation("androidx.compose.runtime:runtime-livedata:1.6.1")
 
     implementation("androidx.core:core-ktx:1.12.0")
     implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.7.0")
